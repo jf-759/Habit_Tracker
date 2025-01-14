@@ -21,3 +21,15 @@ class HabitTracker:
         habit = Habit(name, frequency)
         self.habits.append(habit)
         print(f"Added habit: '{name}' ({frequency})")
+
+    def show_habits(self):
+        """
+        Display all habits and their current status.
+        """
+        if not self.habits:
+            print("No habits added yet!")
+
+        else:
+            print("\nYour Habits:")
+            for habit in self.habits:
+                print(habit)
