@@ -58,3 +58,20 @@ class HabitTracker:
             print("2. Show all habits")
             print("3. Mark a habit as complete")
             print("4. Exit")
+
+            choice = input("Choose an option (1-4): ")
+
+            if choice == "1":
+                name = input("Enter the habit name: ")
+                frequency = input("Enter the frequency (e.g., daily, weekly): ")
+                self.add_habit(name, frequency)
+            elif choice == "2":
+                self.show_habits()
+            elif choice == "3":
+                habit_name = input("Enter the name of the habit to mark complete: ")
+                self.mark_habit_complete(habit_name)
+            elif choice == "4":
+                print("Farewell! Keep building those habits!")
+                break
+            else:
+                print("Invalid choice. Please try again.")
