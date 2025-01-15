@@ -1,3 +1,5 @@
+import datetime
+
 class Habit:
     def __init__(self, name, frequency):
         """
@@ -9,6 +11,31 @@ class Habit:
         self.streak = 0
         self.completed_today = False
         self.last_completed = None
+
+    def mark_complete(self):
+        """
+        Mark the habit as complete and update the streak.
+        """
+        today = datetime.date.today()
+        if self.last_completed !=today:
+            self.streak += 1
+            self.last_completed = True
+            print(f"Great job! You completed '{self.name}' today. Current streak: {self.streak} days.")
+        else:
+            print(f"You've already completed '{self.name}' today!")
+
+    def reset_streak(self):
+        """
+        Reset the streak if the habit is not completed on time.
+        """
+        self.streak = 0
+        print(f"Streak for '{self.name}' has been reset.")
+
+    def __str__(self):
+        """
+        Return a string representation of the habit's status.
+        """
+        return f"{self.name} ({self.frequency}) - Streak: {self.streak} days - Last completed: {self.last_completed}"
 
 class HabitTracker:
     def __init__(self):
@@ -75,3 +102,8 @@ class HabitTracker:
                 break
             else:
                 print("Invalid choice. Please try again.")
+
+# Run the habit tracker
+if __name__ == "__main__":
+    tracker = HabitTracker()
+    tracker.run()
