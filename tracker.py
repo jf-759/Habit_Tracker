@@ -6,6 +6,9 @@ class Habit:
 
         self.name = name
         self.frequency = frequency
+        self.streak = 0
+        self.completed_today = False
+        self.last_completed = None
 
 class HabitTracker:
     def __init__(self):
@@ -33,3 +36,25 @@ class HabitTracker:
             print("\nYour Habits:")
             for habit in self.habits:
                 print(habit)
+
+    def mark_habit_complete(self, habit_name):
+        """
+        Mark a specific habit as complete by name.
+        """
+        for habit in self.habits:
+            if habit.name.lower() == habit_name.lower():
+                habit.mark_complete()
+                return
+        print(f"Habit '{habit_name}' not found!")
+
+    def run(self):
+        """
+        Main command-line interface loop for interacting with the habit tracker.
+        """
+        print("Welcome to Momentum, your Habit Tracker!")
+        while True:
+            print("\nOptions:")
+            print("1. Add a new habit")
+            print("2. Show all habits")
+            print("3. Mark a habit as complete")
+            print("4. Exit")
