@@ -103,6 +103,17 @@ class HabitTracker:
             else:
                 print("Invalid choice. Please try again.")
 
+
+    def save_all_habits(self, file_name="habit_data.txt"):
+        """
+        Save all habits to a file.
+        """
+        with open(file_name, "w") as file:
+            for habit in self.habits:
+                file.write(f"Habit: {habit['name']}, Frequency: {habit['frequency']}, Description: {habit['description']}\n")
+        print("All habits saved successfully in {file_name}!")
+
+
 # Run the habit tracker
 if __name__ == "__main__":
     tracker = HabitTracker()
