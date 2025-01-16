@@ -19,7 +19,7 @@ class Habit:
         today = datetime.date.today()
         if self.last_completed !=today:
             self.streak += 1
-            self.last_completed = True
+            self.last_completed = today
             print(f"Great job! You completed '{self.name}' today. Current streak: {self.streak} days.")
         else:
             print(f"You've already completed '{self.name}' today!")
@@ -51,6 +51,35 @@ class HabitTracker:
         habit = Habit(name, frequency)
         self.habits.append(habit)
         print(f"Added habit: '{name}' ({frequency})")
+
+    def load_habits(self, file_name="data_habits.txt"):
+        """
+        Load habits from a file and initialize them in the tracker.
+        """
+        try:
+            with open(file_name, "r") as file:
+                for line in file:
+                    parts = line.strip().split("|")
+                    if len(parts) == 4:
+                        name = parts[0]
+                        frequency = parts[1]
+                        streak = int(parts[2])
+                        last_completed = (
+                            datetime.datetime.strptime(parts[3], "%Y-%m-%d").date()
+                            if parts[3] != "None"
+                            else None
+                        )
+                
+                        habit = Habit(name, frequency)
+                        habit.streak = streak
+                        habit.last_completed = last_completed
+                        self.habits.append(habit)
+
+            print(f"Habits loaded successfully from {file_name}!")
+        except FileNotFoundError:
+            print(f"No file named '{file_name}' found. Starting with an empty habit list.")
+        except Exception as e:
+            print(f"An error occured while loading habits: {e}")
 
     def show_habits(self):
         """
@@ -98,20 +127,27 @@ class HabitTracker:
                 habit_name = input("Enter the name of the habit to mark complete: ")
                 self.mark_habit_complete(habit_name)
             elif choice == "4":
+                print("Saving habits and exiting...")
+                self.save_all_habits()
+
                 print("Farewell! Keep building those habits!")
                 break
             else:
                 print("Invalid choice. Please try again.")
 
 
-    def save_all_habits(self, file_name="habit_data.txt"):
+    def save_all_habits(self, file_name="data_habits.txt"):
         """
         Save all habits to a file.
         """
         with open(file_name, "w") as file:
             for habit in self.habits:
-                file.write(f"Habit: {habit['name']}, Frequency: {habit['frequency']}, Description: {habit['description']}\n")
-        print("All habits saved successfully in {file_name}!")
+                # Convert last_completed to a string or "None"
+                last_completed_str = habit.last_completed.strftime("%Y-%m-%d") if habit.last_completed else "None"
+                # Write habit details to the file
+                file.write(f"Habit: {habit.name} | Frequency: {habit.frequency} | Streak: {habit.streak} | Last Completed: {habit.last_completed}\n")
+        
+        print(f"All habits saved successfully in {file_name}!")
 
 
 # Run the habit tracker
