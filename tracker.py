@@ -20,16 +20,16 @@ class Habit:
         if self.last_completed != today:
             self.streak += 1
             self.last_completed = today
-            print(f"Great job! You completed '{self.name}' today. Current streak: {self.streak} days.")
+            print(f"\nGreat job! You completed '{self.name}' today. Current streak: {self.streak} days.")
         else:
-            print(f"You've already completed '{self.name}' today!")
+            print(f"\nYou've already completed '{self.name}' today!")
 
     def reset_streak(self):
         """
         Reset the streak if the habit is not completed on time.
         """
         self.streak = 0
-        print(f"Streak for '{self.name}' has been reset.")
+        print(f"\nStreak for '{self.name}' has been reset.")
 
     def __str__(self):
         """
@@ -53,7 +53,7 @@ class HabitTracker:
         """
         habit = Habit(name, frequency)
         self.habits.append(habit)
-        print(f"Added habit: '{name}' ({frequency})")
+        print(f"\nAdded habit: '{name}' ({frequency})")
         self.save_all_habits()
 
     def load_habits(self, file_name="data_habits.txt"):
@@ -82,11 +82,11 @@ class HabitTracker:
                         self.habits.append(habit)
 
         except FileNotFoundError:
-            print(f"No file named '{file_name}' found. Starting with an empty habit list.")
+            print(f"\nNo file named '{file_name}' found. Starting with an empty habit list.")
         except ValueError as e:
-            print(f"An error occured while parsing the habit data: {e}")
+            print(f"\nAn error occured while parsing the habit data: {e}")
         except Exception as e:
-            print(f"An error occured while loading habits: {e}")
+            print(f"\nAn error occured while loading habits: {e}")
 
     def save_all_habits(self, file_name="data_habits.txt"):
         """
@@ -101,7 +101,7 @@ class HabitTracker:
                     file.write(f"{habit.name} | {habit.frequency} | {habit.streak} | {habit.last_completed}\n")
 
         else:
-            print("No habits to save!")
+            print("\nNo habits to save!")
 
     def show_habits(self, file_name="data_habits.txt"):
         """
@@ -116,16 +116,16 @@ class HabitTracker:
                     if content.strip():
                         print(content)
                     else:
-                        print("Oh no! There are no habits found in the file. Please add a new habit.")
+                        print("\nOh no! There are no habits found in the file. Please add a new habit.")
             else:
                 print("\nYour Habits: ")
                 for habit in self.habits:
                     print(habit)
             
         except FileNotFoundError:
-            print(f"No file named '{file_name}' found. Please add habits first!")
+            print(f"\nNo file named '{file_name}' found. Please add habits first!")
         except Exception as e:
-            print(f"An error occured while showing habits:{e}")
+            print(f"\nAn error occured while showing habits:{e}")
 
     def mark_habit_complete(self, habit_name):
         """
@@ -136,7 +136,7 @@ class HabitTracker:
                 habit.mark_complete()
                 self.save_all_habits()
                 return
-        print(f"Habit '{habit_name}' not found!")
+        print(f"\nHabit '{habit_name}' not found!")
 
     def remove_habit(self, habit_name):
         """
@@ -146,15 +146,15 @@ class HabitTracker:
             if habit.name.lower() == habit_name.lower():
                 self.habits.remove(habit)
                 self.save_all_habits()
-                print(f"Habit '{habit_name}' has been removed.")
+                print(f"\nHabit '{habit_name}' has been removed.")
                 return
-        print(f"Habit '{habit_name}' not found!")
+        print(f"\nHabit '{habit_name}' not found!")
 
     def run(self):
         """
         Main command-line interface loop for interacting with the habit tracker.
         """
-        print("Welcome to Momentum, your Habit Tracker!")
+        print("\nWelcome to Momentum, your Habit Tracker!")
         while True:
             print("\nOptions:")
             print("1. Add a new habit")
@@ -163,7 +163,7 @@ class HabitTracker:
             print("4. Remove a habit")
             print("5. Exit")
 
-            choice = input("Choose an option (1-5): ")
+            choice = input("\nChoose an option (1-5): ")
 
             if choice == "1":
                 name = input("Enter the habit name: ")
@@ -178,10 +178,10 @@ class HabitTracker:
                 habit_name = input("Enter the name of the habit to remove: ")
                 self.remove_habit(habit_name)
             elif choice == "5":
-                print("Farewell! Keep building those habits!")
+                print("\nFarewell! Keep building those habits!")
                 break
             else:
-                print("Invalid choice. Please try again.")
+                print("\nInvalid choice. Please try again.")
 
 
 # Run the habit tracker
