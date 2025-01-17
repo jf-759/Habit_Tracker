@@ -138,6 +138,18 @@ class HabitTracker:
                 return
         print(f"Habit '{habit_name}' not found!")
 
+    def remove_habit(self, habit_name):
+        """
+        Remove a specific habit by name.
+        """
+        for habit in self.habits:
+            if habit.name.lower() == habit_name.lower():
+                self.habits.remove(habit)
+                self.save_all_habits()
+                print(f"Habit '{habit_name}' has been removed.")
+                return
+        print(f"Habit '{habit_name}' not found!")
+
     def run(self):
         """
         Main command-line interface loop for interacting with the habit tracker.
@@ -148,9 +160,10 @@ class HabitTracker:
             print("1. Add a new habit")
             print("2. Show all habits")
             print("3. Mark a habit as complete")
-            print("4. Exit")
+            print("4. Remove a habit")
+            print("5. Exit")
 
-            choice = input("Choose an option (1-4): ")
+            choice = input("Choose an option (1-5): ")
 
             if choice == "1":
                 name = input("Enter the habit name: ")
@@ -161,7 +174,10 @@ class HabitTracker:
             elif choice == "3":
                 habit_name = input("Enter the name of the habit to mark complete: ")
                 self.mark_habit_complete(habit_name)
-            elif choice == "4":
+            elif choice =="4":
+                habit_name = input("Enter the name of the habit to remove: ")
+                self.remove_habit(habit_name)
+            elif choice == "5":
                 print("Farewell! Keep building those habits!")
                 break
             else:
