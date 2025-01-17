@@ -63,24 +63,28 @@ class HabitTracker:
         try:
             with open(file_name, "r") as file:
                 for line in file:
-                    parts = line.strip().split("|")
+                    parts = [part.strip() for part in line.strip().split ("|")]
                     if len(parts) == 4:
-                        name = parts[0]
-                        frequency = parts[1]
-                        streak = int(parts[2])
-                        last_completed = (
-                            datetime.datetime.strptime(parts[3], "%Y-%m-%d").date()
-                            if parts[3] != "None"
+                        name = parts[0].replace("Habit: ", "").strip()
+                        frequency = parts[1].replace("Frequency: ", "").strip()
+                        streak = int(parts[2].replace("Streak: ", "").strip())
+                        last_completed = parts[3].replace("Last Completed: ", "").strip()
+
+                        last_completed_date = (
+                            datetime.datetime.strptime(last_completed.strip(), "%Y-%m-%d").date()
+                            if last_completed != "None"
                             else None
                         )
                 
                         habit = Habit(name, frequency)
                         habit.streak = streak
-                        habit.last_completed = last_completed
+                        habit.last_completed = last_completed_date
                         self.habits.append(habit)
 
         except FileNotFoundError:
             print(f"No file named '{file_name}' found. Starting with an empty habit list.")
+        except ValueError as e:
+            print(f"An error occured while parsing the habit data: {e}")
         except Exception as e:
             print(f"An error occured while loading habits: {e}")
 
@@ -95,8 +99,6 @@ class HabitTracker:
                     last_completed_str = habit.last_completed.strftime("%Y-%m-%d") if habit.last_completed else "None"
                     # Write habit details to the file
                     file.write(f"{habit.name} | {habit.frequency} | {habit.streak} | {habit.last_completed}\n")
-        
-            print(f"All habits saved successfully in {file_name}!")
 
         else:
             print("No habits to save!")

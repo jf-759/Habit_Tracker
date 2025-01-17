@@ -1,1 +1,2 @@
-Take Vitamins | daily | 1 | 2025-01-16
+Take vitamins | daily | 1 | 2025-01-16
+clean room | weekly | 1 | 2025-01-16
